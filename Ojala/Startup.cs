@@ -37,16 +37,16 @@ namespace Ojala
             services.AddSingleton<IServiceProvider>(x => new FuncServiceProvider(x.GetRequiredService));
             services.AddSingleton<Dogs>();
             services.AddSingleton<Dog>();
-            // services.AddSingleton<ISchema, GraphSchema>();
-            services.AddSingleton<GraphSchema>();
+            // services.AddSingleton<ISchema, GraphSchema>(); No recuerdo
+            services.AddSingleton<GraphSchema>(); // OK
             services.AddGraphQL(x =>
             {
                 x.EnableMetrics = true;
 
 
             }).AddSystemTextJson(deserializerSettings => { }, serializerSettings => { });
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDBContext")));
-            services.AddScoped(typeof(DogRepository));
+            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDBContext"))); // OK
+            services.AddScoped(typeof(DogRepository)); // OK
 
         }
 

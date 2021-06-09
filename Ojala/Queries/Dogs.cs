@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GraphQL.Types;
 using DogType = Ojala.Types.Dog;
 using Ojala.Models;
-using System.Linq;
 using GraphQL;
-using Ojala.repositories;
 
 namespace Ojala.Queries
 {
@@ -21,7 +18,7 @@ namespace Ojala.Queries
             return dogs.FindAll(x => x.Id == id);
         }
 
-        public Dogs(IServiceProvider serviceProvider)
+        public Dogs()
         {
             Field<ListGraphType<DogType>>("Dogs", arguments: new QueryArguments(new List<QueryArgument>
             {
@@ -32,12 +29,12 @@ namespace Ojala.Queries
             }),
             resolve: context =>
             {
-                var dogRepository = new DogRepository(serviceProvider);
+                // var dogRepository = new DogRepository(serviceProvider); MAL
                 
 
                 var id = context.GetArgument<int>("id");
-                // var response = this.GetDogs(id);
-                var response = dogRepository.Get(id).GetAwaiter().GetResult();
+                var response = this.GetDogs(id);
+                // var response = dogRepository.Get(id).GetAwaiter().GetResult();
                 return response;
             }
             );
